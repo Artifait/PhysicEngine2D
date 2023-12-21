@@ -4,12 +4,18 @@
 #include <string>
 #include <new>
 
-class VirtualCollider
+namespace phis2D
 {
-public:
-	VirtualCollider() = default;
-	~VirtualCollider() = default;
+	namespace collider
+	{
+		class VirtualCollider
+		{
+		public:
+			VirtualCollider() = default;
+			~VirtualCollider() = default;
 
-	virtual phis2D::typeCollider GetTypeCollider() = 0;
-	virtual const v2f& GetPosition() = 0;
-};
+			virtual phis2D::collider::typeCollider GetTypeCollider() = 0;
+			virtual const v2f& GetPosition() = 0;
+		};
+	}
+}

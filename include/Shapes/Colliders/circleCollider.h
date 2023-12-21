@@ -8,13 +8,13 @@ namespace phis2D
 		class CircleCollider : public VirtualCollider
 		{
 		public:
-			phis2D::typeCollider GetTypeCollider() override;
+			phis2D::collider::typeCollider GetTypeCollider() override;
 			const v2f& GetPosition() override;
 			const float& GetRadius();
 
 			~CircleCollider() = default;
 
-			friend bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, CircleCollider* outCircleCollider);
+			friend bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider* outCircleCollider);
 		private:
 			CircleCollider(const v2f& posCenter, float r);
 
@@ -22,6 +22,6 @@ namespace phis2D
 			v2f CenterPosition;
 		};
 
-		bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, CircleCollider* outCircleCollider);
+		bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider* outCircleCollider);
 	}
 }

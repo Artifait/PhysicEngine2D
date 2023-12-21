@@ -2,9 +2,12 @@
 
 namespace phis2D
 {
-	enum typeCollider {
-		Box, 
-		Circle,
-		Polygon
-	};
+	namespace collider
+	{
+		enum typeCollider {
+			Box,
+			Circle,
+			Polygon
+		};
+	}
 }

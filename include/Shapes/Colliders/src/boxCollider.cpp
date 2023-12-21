@@ -1,7 +1,6 @@
 #include <Shapes/Colliders/boxCollider.h>
 #include <SimulateData.h>
 
-
 namespace phis2D
 {
 	namespace collider
@@ -17,7 +16,7 @@ namespace phis2D
 
 		typeCollider BoxCollider::GetTypeCollider()
 		{
-			return phis2D::Circle;
+			return phis2D::collider::Circle;
 		}
 
 		BoxCollider::BoxCollider(const v2f& pos, const v2f& size)
@@ -25,45 +24,45 @@ namespace phis2D
 		{
 		}
 
-		bool CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, BoxCollider* outBoxCollider)
+		bool CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, VirtualCollider* outBoxCollider)
 		{
 			outBoxCollider = nullptr;
 			float area = size.x * size.y;
 
 			if (size.x > phis2D::worldPhysicConstant::maxSide || size.y > phis2D::worldPhysicConstant::maxSide)
 			{
-				outMessage = "\nCreating a box with sides: {" + std::to_string(size.x) + ", " + std::to_string(size.y) + "} greater than the maximum lenght side: " +
-					std::to_string(phis2D::worldPhysicConstant::maxSide) + ".\n";
+				outMessage = "[CreateBoxCollider](--errore 'Big Value')\n {\n\tbox with sides : {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
+					"} maximum side: " + std::to_string((int)phis2D::worldPhysicConstant::maxSide) + ".\n }\n";
 				return false;
 			}
 			if (size.x < phis2D::worldPhysicConstant::minSide || size.y < phis2D::worldPhysicConstant::minSide)
 			{
-				outMessage = "\nCreating a box with sides: {" + std::to_string(size.x) + ", " + std::to_string(size.y) + "} less than the minimum lenght side: " +
-					std::to_string(phis2D::worldPhysicConstant::minSide) + ".\n";
+				outMessage = "[CreateBoxCollider](--errore 'Min Value')\n {\n\tbox with sides: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
+					"} minimum side: " + std::to_string((int)phis2D::worldPhysicConstant::minSide) + ".\n }\n";
 				return false;
 			}
 
 			if (area > phis2D::worldPhysicConstant::maxArea)
 			{
-				outMessage = "\nCreating a box with Area: " + std::to_string(area) + " greater than the maximum Area: " +
-					std::to_string(phis2D::worldPhysicConstant::maxArea) + ".\n";
+				outMessage = "[CreateBoxCollider](--errore 'Big Value')\n {\n\tbox with Area: " + std::to_string(area) + " maximum Area: " +
+					std::to_string((int)phis2D::worldPhysicConstant::maxArea) + ".\n }\n";
 				return false;
 			}
 			if (area < phis2D::worldPhysicConstant::minArea)
 			{
-				outMessage = "\nCreating a box with Area: " + std::to_string(area) + " less than the minimum Area: " +
-					std::to_string(phis2D::worldPhysicConstant::minArea) + ".\n";
+				outMessage = "[CreateBoxCollider](--errore 'Min Value')\n {\n\tbox with Area: " + std::to_string(area) + " minimum Area: " +
+					std::to_string((int)phis2D::worldPhysicConstant::minArea) + ".\n }\n";
 				return false;
 			}
 
 			outBoxCollider = new(std::nothrow) phis2D::collider::BoxCollider(pos, size);
 			if (outBoxCollider == nullptr)
 			{
-				outMessage = "\nMemory allocation failed.\n";
+				outMessage = "[CreateBoxCollider](--errore 'Memory'){ Memory allocation failed. }\n";
 				return false;
 			}
-			outMessage = "\nBox with size: {" + std::to_string(size.x) + ", " + std::to_string(size.y) +
-				"}\n and position: {" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + "} was successfully created.\n";
+			outMessage = "[CreateBoxCollider](created)\n {\n\tBox with size: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
+				"} and pos: {" + std::to_string((int)pos.x) + ", " + std::to_string((int)pos.y) + "}.\n }\n";
 			return true;
 		}
 
