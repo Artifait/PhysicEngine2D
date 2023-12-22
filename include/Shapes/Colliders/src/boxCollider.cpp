@@ -18,7 +18,14 @@ namespace phis2D
 		{
 			return phis2D::collider::Circle;
 		}
-
+		sf::FloatRect BoxCollider::GetRectCollider()
+		{
+			return sf::FloatRect(Position, Size);
+		}
+		void BoxCollider::Move(const v2f& offset)
+		{ 
+			Position += offset;
+		}
 		BoxCollider::BoxCollider(const v2f& pos, const v2f& size)
 			: Position(pos), Size(size)
 		{

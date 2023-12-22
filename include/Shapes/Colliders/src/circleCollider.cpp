@@ -25,7 +25,16 @@ namespace phis2D
 		{
 		}
 
-		bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider* outCircleCollider)
+		void phis2D::collider::CircleCollider::Move(const v2f& offset)
+		{
+			CenterPosition += offset;
+		}
+
+		sf::FloatRect CircleCollider::GetRectCollider()
+		{
+			return sf::FloatRect(CenterPosition - v2f(Radius, Radius), v2f(2.f * Radius, 2.f * Radius));
+		}
+		bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider)
 		{
 			outCircleCollider = nullptr;
 			float area = r * r * phis2D::PI;
@@ -56,6 +65,7 @@ namespace phis2D
 			}
 
 			outCircleCollider = new(std::nothrow) phis2D::collider::CircleCollider(posCenter, r);
+
 			if (outCircleCollider == nullptr)
 			{
 				outMessage = "[CreateCircleCollider](--errore 'Memory'){ Memory allocation failed. }\n";

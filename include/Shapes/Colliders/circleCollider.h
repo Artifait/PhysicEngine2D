@@ -10,11 +10,13 @@ namespace phis2D
 		public:
 			phis2D::collider::typeCollider GetTypeCollider() override;
 			const v2f& GetPosition() override;
+			sf::FloatRect GetRectCollider() override;
+
+			void Move(const v2f& offset) override;
 			const float& GetRadius();
 
+			friend bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider);
 			~CircleCollider() = default;
-
-			friend bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider* outCircleCollider);
 		private:
 			CircleCollider(const v2f& posCenter, float r);
 
@@ -22,6 +24,6 @@ namespace phis2D
 			v2f CenterPosition;
 		};
 
-		bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider* outCircleCollider);
+		bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider);
 	}
 }

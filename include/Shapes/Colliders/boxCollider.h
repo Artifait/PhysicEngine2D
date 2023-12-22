@@ -10,6 +10,8 @@ namespace phis2D
 		public:
 			phis2D::collider::typeCollider GetTypeCollider() override;
 			const v2f& GetPosition() override;
+			sf::FloatRect GetRectCollider() override;
+			void Move(const v2f& offset) override;
 			const v2f& GetSize();
 
 			~BoxCollider() = default;
