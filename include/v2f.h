@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
+#include <iostream>
 
 class v2f {
 public:
@@ -144,7 +145,7 @@ public:
         return sqrt(v.x * v.x + v.y * v.y);
     }
 
-    static inline float LengthSqure(const v2f& v) {
+    static inline float LengthSquere(const v2f& v) {
         return v.x * v.x + v.y * v.y;
     }
 
@@ -152,9 +153,10 @@ public:
         return v2f::Length(v0 - v1);
     }
 
-    static inline float DistanceSqure(const v2f& v0, const v2f& v1) {
-        return v2f::LengthSqure(v0 - v1);
+    static inline float DistanceSquere(const v2f& v0, const v2f& v1) {
+        return v2f::LengthSquere(v0 - v1);
     }
+
 
     static v2f Normalize(const v2f& v) {
         float length = Length(v);
@@ -170,4 +172,8 @@ public:
     }
 
     float x, y;
+    friend std::ostream& operator<<(std::ostream& os, const v2f& vec) {
+        os << "v2f(" << vec.x << ", " << vec.y << ")";
+        return os;
+    }
 };

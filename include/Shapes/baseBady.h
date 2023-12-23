@@ -23,7 +23,6 @@ namespace phis2D
 		v2f LinearVelocity;			// скорость 
 
 		bool IsStatic;				// статический
-		float rotation;				// угол
 		float rotationVelocity;		// скорость вращаения
 		float Density;				// плотность
 		float Mass;					// масса

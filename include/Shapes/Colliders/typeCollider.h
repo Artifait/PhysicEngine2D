@@ -5,9 +5,9 @@ namespace phis2D
 	namespace collider
 	{
 		enum typeCollider {
-			Box,
-			Circle,
-			Polygon
+			Box = 0,
+			Circle = 1,
+			Polygon = 2
 		};
 	}
 }

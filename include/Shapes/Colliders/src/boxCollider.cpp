@@ -1,5 +1,6 @@
 #include <Shapes/Colliders/boxCollider.h>
 #include <SimulateData.h>
+#include <TransformPhis2D.h>
 
 namespace phis2D
 {
@@ -16,7 +17,7 @@ namespace phis2D
 
 		typeCollider BoxCollider::GetTypeCollider()
 		{
-			return phis2D::collider::Circle;
+			return phis2D::collider::Box;
 		}
 		sf::FloatRect BoxCollider::GetRectCollider()
 		{
@@ -25,13 +26,63 @@ namespace phis2D
 		void BoxCollider::Move(const v2f& offset)
 		{ 
 			Position += offset;
+			transformUpdateRequired = true;
 		}
+		void phis2D::collider::BoxCollider::MoveTo(const v2f& position)
+		{
+			Position = position;
+			transformUpdateRequired = true;
+		}
+
 		BoxCollider::BoxCollider(const v2f& pos, const v2f& size)
 			: Position(pos), Size(size)
 		{
+			transformedVertices = new v2f[4];
+			vertices = new v2f[4];
+
+			CreateBoxVertices();
+			countVertices = 4;
+			transformUpdateRequired = true;
+		}
+		const std::pair<const v2f* const&, size_t> phis2D::collider::BoxCollider::GetTransformedVertices()
+		{
+			if (transformUpdateRequired)
+			{
+				Transform2D transform(Position, rotation);
+				for (int i = 0; i < countVertices; i++)
+				{
+					transformedVertices[i] = Transform2D::Transform(vertices[i], transform);
+				}
+			}
+			transformUpdateRequired = false;
+			return std::pair<v2f*&, size_t>(transformedVertices, countVertices);
+		}
+		const std::pair<const size_t* const&, size_t> phis2D::collider::BoxCollider::GetTrinagles()
+		{
+			return std::pair<const size_t* const&, size_t>(trianglesBox, 6);
+		}
+		void BoxCollider::CreateBoxVertices()
+		{
+			float left, right, bottom, top;
+
+			left = -Size.x / 2.f;
+			right = left + Size.x;
+			bottom = -Size.y / 2.f;
+			top = bottom + Size.y;
+
+			vertices[0] = v2f(left, top);
+			vertices[1] = v2f(right, top);
+			vertices[2] = v2f(right, bottom);
+			vertices[3] = v2f(left, bottom);
+
+			transformedVertices[0] = v2f(left, top);
+			transformedVertices[1] = v2f(right, top);
+			transformedVertices[2] = v2f(right, bottom);
+			transformedVertices[3] = v2f(left, bottom);
 		}
 
-		bool CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, VirtualCollider* outBoxCollider)
+
+		bool CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, VirtualCollider*& outBoxCollider)
 		{
 			outBoxCollider = nullptr;
 			float area = size.x * size.y;

@@ -4,7 +4,7 @@
 namespace phis2D
 {
 	BaseBady2D::BaseBady2D(collider::VirtualCollider* collider, bool isStatic, float density, float mass, float restition, float area)
-		  : ICollider{ collider }, IsStatic{ isStatic }, rotation{ 0.f }, 
+		  : ICollider{ collider }, IsStatic{ isStatic },  
 			rotationVelocity{0.f}, LinearVelocity{0.f, 0.f}, Density{density},
 			Mass{ mass }, Restitution{ restition }, Area{area}   {			}
 

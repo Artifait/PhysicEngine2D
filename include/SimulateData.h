@@ -24,13 +24,12 @@ namespace phis2D
 	const float PI = 3.141592f;
 
 
-	static double ToRadian(double degrees) {
-		double radians = degrees * PI / 180.0;
-		return radians;
+	static inline float ToRadian(float degrees) {
+		return degrees * PI / 180.0f;
 	}
 
-	static double ToDegrees(double radians) {
-		double degrees = radians * 180.0 / PI;
-		return degrees;
+	static inline float ToDegrees(float radians) {
+		return radians * 180.0f / PI;
 	}
+
 }

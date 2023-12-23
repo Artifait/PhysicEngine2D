@@ -8,15 +8,21 @@ namespace phis2D
 		class CircleCollider : public VirtualCollider
 		{
 		public:
+
 			phis2D::collider::typeCollider GetTypeCollider() override;
-			const v2f& GetPosition() override;
 			sf::FloatRect GetRectCollider() override;
+			const v2f& GetPosition() override;
 
 			void Move(const v2f& offset) override;
-			const float& GetRadius();
+			void MoveTo(const v2f& position) override;
 
-			friend bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider);
+			virtual const std::pair<const size_t* const&, size_t> GetTrinagles();//first индексы, second их колво
+			virtual const std::pair<const v2f* const&, size_t> GetTransformedVertices();
+
+			const float& GetRadius();
 			~CircleCollider() = default;
+			friend bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider);
+
 		private:
 			CircleCollider(const v2f& posCenter, float r);
 

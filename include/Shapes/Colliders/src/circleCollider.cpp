@@ -29,11 +29,25 @@ namespace phis2D
 		{
 			CenterPosition += offset;
 		}
+		void phis2D::collider::CircleCollider::MoveTo(const v2f& position)
+		{
+			CenterPosition = position;
+		}
+
+		const std::pair<const v2f* const&, size_t> phis2D::collider::CircleCollider::GetTransformedVertices()
+		{
+			return std::pair<const v2f* const&, size_t>(nullptr, 0);
+		}
 
 		sf::FloatRect CircleCollider::GetRectCollider()
 		{
 			return sf::FloatRect(CenterPosition - v2f(Radius, Radius), v2f(2.f * Radius, 2.f * Radius));
 		}
+		const std::pair<const size_t* const&, size_t> phis2D::collider::CircleCollider::GetTrinagles()
+		{
+			return std::pair<const size_t* const&, size_t>(nullptr, 0);
+		}
+
 		bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider)
 		{
 			outCircleCollider = nullptr;

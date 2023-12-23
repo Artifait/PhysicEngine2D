@@ -8,6 +8,24 @@ namespace utility
 {
     namespace draw
     {
+        void DrawVertices(sf::RenderWindow& win, const v2f* vertices, size_t sizeV, const size_t* triangle, size_t sizeT, sf::Color col = sf::Color(120, 120, 120))
+        {
+            sf::VertexArray liDraw(sf::Triangles, sizeT);
+            for (int i = 0; i < sizeT; i++)
+                liDraw[i] = sf::Vertex(vertices[triangle[i]], col);
+            win.draw(liDraw);
+        }
+        void DrawVerticesLine(sf::RenderWindow& win, const v2f* vertices, size_t sizeV, const size_t* triangle, size_t sizeT, sf::Color col = sf::Color(120, 120, 120))
+        {
+            sf::VertexArray liDraw(sf::LineStrip, sizeT + 1);
+            for (int i = 0; i < sizeT; i++)
+                liDraw[i] = sf::Vertex(vertices[triangle[i]], col);
+            liDraw[sizeT] = liDraw[0];
+            win.draw(liDraw);
+        }
+
+
+
         void DrawVector(sf::RenderWindow& win, const sf::Vector2f& vec, const sf::Vector2f& pos = sf::Vector2f(), sf::Color col = sf::Color(120, 120, 120))
         {
             sf::VertexArray liDraw(sf::Lines, 2);

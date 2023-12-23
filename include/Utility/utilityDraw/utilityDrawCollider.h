@@ -6,26 +6,26 @@ namespace utility
 {
 	namespace draw
 	{
-		void DrawCollider(sf::RenderWindow& win, phis2D::collider::VirtualCollider* collider, bool filled = true, const sf::Color& col = sf::Color(rand() % 255, rand() % 255, rand() % 255))
+		void DrawCollider(sf::RenderWindow& win, phis2D::collider::VirtualCollider* collider, bool filled = true, const sf::Color& col = sf::Color(34, 109, 224))
 		{
 			if (collider == nullptr)
 			{
 				//std::cout << "bla\n";
 				return;
 			}
-
-			switch (collider->GetTypeCollider())
+			if (collider->GetTypeCollider() == phis2D::collider::Box)
 			{
-			case phis2D::collider::Box:
-				filled ? DrawBox(win, collider->GetPosition(), static_cast<phis2D::collider::BoxCollider*>(collider)->GetSize(), col)
-					: DrawBoxLine(win, collider->GetPosition(), static_cast<phis2D::collider::BoxCollider*>(collider)->GetSize(), col);
-				break;
-			case phis2D::collider::Circle:
-				filled ? DrawPoint(win, collider->GetPosition(), static_cast<phis2D::collider::CircleCollider*>(collider)->GetRadius(), col)
-					: DrawCircLine(win, collider->GetPosition(), static_cast<phis2D::collider::CircleCollider*>(collider)->GetRadius(), col);
-				break;
-			default:
-				break;
+				auto vertix = collider->GetTransformedVertices();
+				auto index = collider->GetTrinagles();
+				filled ? DrawVertices(win, vertix.first, vertix.second, index.first, index.second, col) :
+					DrawVerticesLine(win, vertix.first, vertix.second, index.first, index.second, col);
+			}
+			else if (collider->GetTypeCollider() == phis2D::collider::Circle)
+			{
+				float radius = static_cast<phis2D::collider::CircleCollider*>(collider)->GetRadius();
+				filled ? DrawPoint(win, collider->GetPosition(), radius, col)
+					: DrawCircLine(win, collider->GetPosition(), radius, col);
+				DrawVector(win, v2f(cos(collider->GetRotation()) * radius, sin(collider->GetRotation()) * radius), collider->GetPosition());
 			}
 		}
 	}
