@@ -11,7 +11,7 @@ namespace phis2D
 		const float maxRadius = 1000.f;// 1 km
 		const float minRadius = 0.01f; 
 
-		const float maxSide = 1000.f;	 // 2 km длина
+		const float maxSide = 1000.f;	 
 		const float minSide = 0.01f;	 
 
 		const float maxArea = maxSide * maxSide;

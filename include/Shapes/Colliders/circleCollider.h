@@ -5,31 +5,47 @@ namespace phis2D
 {
 	namespace collider
 	{
+		//Коллайдер для Круга
 		class CircleCollider : public VirtualCollider
 		{
-		public:
+		public: 
 
-			phis2D::collider::typeCollider GetTypeCollider() override;
-			sf::FloatRect GetRectCollider() override;
-			const v2f& GetPosition() override;
-
-			void Move(const v2f& offset) override;
-			void MoveTo(const v2f& position) override;
-
-			virtual const std::pair<const size_t* const&, size_t> GetTrinagles();//first индексы, second их колво
-			virtual const std::pair<const v2f* const&, size_t> GetTransformedVertices();
-
-			const float& GetRadius();
+			//==========base==========
 			~CircleCollider() = default;
+			const float& GetRadius();
+			//========================
+			
+
+			//--------------------------РВМ часть--------------------------
+			//================Реализация Виртуальных Методов===============
+
+			const vecV2f& GetTransformedVertices() override;
+			phis2D::collider::typeCollider GetTypeCollider() override;
+			v2fRect GetRectCollider() override;
+
+			//=============================================================
+
+
+			//=================out_Fabric=================
 			friend bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider);
+			//=================out_Fabric=================
 
 		private:
+			void SetTriangles() override {};
+			void SetVertices() override {};
+			//==========base==========
 			CircleCollider(const v2f& posCenter, float r);
+			//========================
 
+
+			//----BaseEtoZnatNado----
 			float Radius;
-			v2f CenterPosition;
+			//-----------------------
 		};
 
+		//=================out_Fabric=================
 		bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider);
+		//=================out_Fabric=================
+
 	}
 }

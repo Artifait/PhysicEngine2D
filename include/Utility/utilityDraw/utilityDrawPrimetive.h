@@ -1,7 +1,10 @@
 #pragma once
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <v2f.h>
+#include <StructData/v2f.h>
+
+#include <StructData/v2fRect.h>
+
 #include <SimulateData.h>
 
 namespace utility
@@ -183,13 +186,11 @@ namespace utility
         }
         void DrawBoxLine(sf::RenderWindow& win, const sf::FloatRect& rect, const sf::Color& col = sf::Color::Red)
         {
-            sf::VertexArray box(sf::LinesStrip, 5);
-            box[0] = box[1] = box[2] = box[3] = sf::Vertex(rect.getPosition(), col);
-            box[1].position.x += rect.width;
-            box[3].position.y += rect.top;
-            box[2].position += rect.getSize();
-            box[4] = box[0];
-            win.draw(box);
+            DrawBoxLine(win, rect.getPosition(), rect.getSize(), col);
+        }
+        void DrawBoxLine(sf::RenderWindow& win, const v2fRect& rect, const sf::Color& col = sf::Color::Red)
+        {
+            DrawBoxLine(win, rect.GetPosition(), rect.GetSize(), col);
         }
     }
 

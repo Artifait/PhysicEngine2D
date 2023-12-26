@@ -1,6 +1,6 @@
 #pragma once
 #include <Shapes/Colliders.h>
-#include <v2f.h>
+#include <StructData/v2f.h>
 #include <float.h>
 
 namespace phis2D
@@ -12,8 +12,8 @@ namespace phis2D
 		~Collision() = default;
 	private: static void ProjectPolygons(const std::pair<const v2f* const&, size_t>& vertices, const v2f& axis, float& min, float& max) //точно норм
 	{
-		min = 3.4E+38;
-		max = -3.4E+38;
+		min = 3.4E+38f;
+		max = -3.4E+38f;
 		for (int i = 0; i < vertices.second; i++)
 		{
 			float proj = v2f::dot(vertices.first[i], axis);
@@ -37,10 +37,10 @@ namespace phis2D
 	private: static int FindClosestPointOnPolygon(const v2f& circleCenter, const std::pair<const v2f* const&, size_t>& vertices)//точно норм
 	{
 		int result = -1;
-		float minDist = 3.4E+38;
+		float minDist = 3.4E+38f;
 		for (int i = 0; i < vertices.second; i++)
 		{
-			float dist = v2f::Distance(circleCenter, vertices.first[i]);
+			float dist = v2f::DistanceSquere(circleCenter, vertices.first[i]);
 			if (minDist > dist) 
 			{
 				result = i;
@@ -79,7 +79,7 @@ namespace phis2D
 	private: static bool IntersectCirclePolygon(collider::CircleCollider* circleA, collider::VirtualCollider* colliderB, v2f& normal, float& depth)
 		{
 			auto vertixB = colliderB->GetTransformedVertices();
-			depth = 3.4E+38;
+			depth = 3.4E+38f;
 			float minA, minB, maxA, maxB;
 			float axisDepth = 0.f;
 			v2f axis;
@@ -191,19 +191,19 @@ namespace phis2D
 		{
 			if (typeB == collider::Circle)
 				result = IntersectCircles(static_cast<collider::CircleCollider*>(colliderA), static_cast<collider::CircleCollider*>(colliderB), normal, depth);
-			else if(typeB == collider::Box)
+			else if(typeB == collider::Box || typeB == collider::Polygon)
 			{
 				result = IntersectCirclePolygon(static_cast<collider::CircleCollider*>(colliderA), colliderB, normal, depth);
 			}
 		}
-		else if (typeA == collider::Box)
+		else if (typeA == collider::Box || typeB == collider::Polygon)
 		{
 			if (typeB == collider::Circle)
 			{
 				result = IntersectCirclePolygon(static_cast<collider::CircleCollider*>(colliderB), colliderA, normal, depth);
 				normal = -normal;
 			}
-			else if (typeB == collider::Box)
+			else if (typeB == collider::Box || typeB == collider::Polygon)
 			{
 				result = IntersectPolygons(colliderA, colliderB, normal, depth);
 			}

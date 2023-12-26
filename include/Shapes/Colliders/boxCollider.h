@@ -5,31 +5,39 @@ namespace phis2D
 {
 	namespace collider
 	{
-		const size_t trianglesBox[6] = { 0, 1, 2, 0, 2, 3 };
 		class BoxCollider : public VirtualCollider
 		{
 		public:
 
-			phis2D::collider::typeCollider GetTypeCollider() override;
-			sf::FloatRect GetRectCollider() override;
-			const v2f& GetPosition() override;
-
-			void Move(const v2f& offset) override;
-			void MoveTo(const v2f& position) override;
-			virtual const std::pair<const v2f* const&, size_t> GetTransformedVertices() override;
-			const std::pair<const size_t* const&, size_t> GetTrinagles();//first индексы, second их колво
-
-			const v2f& GetSize();
+			//==========base==========
 			~BoxCollider() = default;
+			const v2f& GetSize();
+			//========================
+
+			//--------------------------РВМ часть--------------------------
+			//================Реализация Виртуальных Методов===============
+
+			phis2D::collider::typeCollider GetTypeCollider() override;
+
+			//=================out_Fabric=================
 			friend bool CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, VirtualCollider*& outBoxCollider);
+			//=================out_Fabric=================
 
 		private:
-			BoxCollider(const v2f& pos, const v2f& size);
-			void CreateBoxVertices();
+			void SetTriangles() override;
+			void SetVertices() override;
 
-			v2f Position;
+			//==========base==========
+			BoxCollider(const v2f& posCenter, const v2f& size);
+
 			v2f Size;
+
+			//-----------------------
 		};
+
+		//=================out_Fabric=================
 		bool CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, VirtualCollider*& outBoxCollider);
+		//=================out_Fabric=================
+
 	}
 }

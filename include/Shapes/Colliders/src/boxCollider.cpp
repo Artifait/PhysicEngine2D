@@ -1,67 +1,42 @@
 #include <Shapes/Colliders/boxCollider.h>
 #include <SimulateData.h>
-#include <TransformPhis2D.h>
+#include <StructData/TransformPhis2D.h>
 
 namespace phis2D
 {
 	namespace collider
 	{
-		const v2f& BoxCollider::GetPosition()
+
+
+		BoxCollider::BoxCollider(const v2f& posCenter, const v2f& size)
+			: Size(size)
 		{
-			return Position;
-		}
-		const v2f& BoxCollider::GetSize()
-		{
-			return Size;
+			CenterPosition = posCenter;
+			CreateTriangles(6);
+			CreateVertices(4);
+			SetVertices();
+			SetTriangles();
 		}
 
-		typeCollider BoxCollider::GetTypeCollider()
-		{
-			return phis2D::collider::Box;
-		}
-		sf::FloatRect BoxCollider::GetRectCollider()
-		{
-			return sf::FloatRect(Position, Size);
-		}
-		void BoxCollider::Move(const v2f& offset)
-		{ 
-			Position += offset;
-			transformUpdateRequired = true;
-		}
-		void phis2D::collider::BoxCollider::MoveTo(const v2f& position)
-		{
-			Position = position;
-			transformUpdateRequired = true;
-		}
+		//-------------Geters-------------
 
-		BoxCollider::BoxCollider(const v2f& pos, const v2f& size)
-			: Position(pos), Size(size)
-		{
-			transformedVertices = new v2f[4];
-			vertices = new v2f[4];
+		const v2f& BoxCollider::GetSize() { return Size; }
+		typeCollider BoxCollider::GetTypeCollider() { return phis2D::collider::Box; }
 
-			CreateBoxVertices();
-			countVertices = 4;
-			transformUpdateRequired = true;
-		}
-		const std::pair<const v2f* const&, size_t> phis2D::collider::BoxCollider::GetTransformedVertices()
+
+		//---------Creaters---------
+
+		void phis2D::collider::BoxCollider::SetTriangles()
 		{
-			if (transformUpdateRequired)
-			{
-				Transform2D transform(Position, rotation);
-				for (int i = 0; i < countVertices; i++)
-				{
-					transformedVertices[i] = Transform2D::Transform(vertices[i], transform);
-				}
-			}
-			transformUpdateRequired = false;
-			return std::pair<v2f*&, size_t>(transformedVertices, countVertices);
+			if (countTriangleIndex != 6) CreateTriangles(6);
+			triangleIndex[0] = 0;
+			triangleIndex[1] = 1;
+			triangleIndex[2] = 2;
+			triangleIndex[3] = 0;
+			triangleIndex[4] = 2;
+			triangleIndex[5] = 3;
 		}
-		const std::pair<const size_t* const&, size_t> phis2D::collider::BoxCollider::GetTrinagles()
-		{
-			return std::pair<const size_t* const&, size_t>(trianglesBox, 6);
-		}
-		void BoxCollider::CreateBoxVertices()
+		void phis2D::collider::BoxCollider::SetVertices()
 		{
 			float left, right, bottom, top;
 
@@ -75,10 +50,7 @@ namespace phis2D
 			vertices[2] = v2f(right, bottom);
 			vertices[3] = v2f(left, bottom);
 
-			transformedVertices[0] = v2f(left, top);
-			transformedVertices[1] = v2f(right, top);
-			transformedVertices[2] = v2f(right, bottom);
-			transformedVertices[3] = v2f(left, bottom);
+			transformUpdateRequired = true;
 		}
 
 
@@ -90,26 +62,26 @@ namespace phis2D
 			if (size.x > phis2D::worldPhysicConstant::maxSide || size.y > phis2D::worldPhysicConstant::maxSide)
 			{
 				outMessage = "[CreateBoxCollider](--errore 'Big Value')\n {\n\tbox with sides : {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
-					"} maximum side: " + std::to_string((int)phis2D::worldPhysicConstant::maxSide) + ".\n }\n";
+					"} maximum side: " + std::to_string((int)phis2D::worldPhysicConstant::maxSide) + ".\n}\n";
 				return false;
 			}
 			if (size.x < phis2D::worldPhysicConstant::minSide || size.y < phis2D::worldPhysicConstant::minSide)
 			{
-				outMessage = "[CreateBoxCollider](--errore 'Min Value')\n {\n\tbox with sides: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
-					"} minimum side: " + std::to_string((int)phis2D::worldPhysicConstant::minSide) + ".\n }\n";
+				outMessage = "[CreateBoxCollider](--errore 'Small Value')\n {\n\tbox with sides: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
+					"} minimum side: " + std::to_string((int)phis2D::worldPhysicConstant::minSide) + ".\n}\n";
 				return false;
 			}
 
 			if (area > phis2D::worldPhysicConstant::maxArea)
 			{
 				outMessage = "[CreateBoxCollider](--errore 'Big Value')\n {\n\tbox with Area: " + std::to_string(area) + " maximum Area: " +
-					std::to_string((int)phis2D::worldPhysicConstant::maxArea) + ".\n }\n";
+					std::to_string((int)phis2D::worldPhysicConstant::maxArea) + ".\n}\n";
 				return false;
 			}
 			if (area < phis2D::worldPhysicConstant::minArea)
 			{
-				outMessage = "[CreateBoxCollider](--errore 'Min Value')\n {\n\tbox with Area: " + std::to_string(area) + " minimum Area: " +
-					std::to_string((int)phis2D::worldPhysicConstant::minArea) + ".\n }\n";
+				outMessage = "[CreateBoxCollider](--errore 'Small Value')\n {\n\tbox with Area: " + std::to_string(area) + " minimum Area: " +
+					std::to_string((int)phis2D::worldPhysicConstant::minArea) + ".\n}\n";
 				return false;
 			}
 

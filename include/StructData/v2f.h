@@ -130,6 +130,9 @@ public:
     }
 
     // —татические методы дл€ работы с векторами
+    static v2f v2fMax() { return v2f(3.4E+38f, 3.4E+38f); }
+    static v2f v2fMin() { return v2f(-3.4E+38f, -3.4E+38f); }
+
 
     static float dot(const v2f& v1, const v2f& v2) {
         return v1.x * v2.x + v1.y * v2.y;
