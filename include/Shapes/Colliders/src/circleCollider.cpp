@@ -18,7 +18,7 @@ namespace phis2D
 
 		const float& CircleCollider::GetRadius() { return Radius; }
 		typeCollider CircleCollider::GetTypeCollider() { return phis2D::collider::Circle; }
-		const vecV2f& phis2D::collider::CircleCollider::GetTransformedVertices() { return vecV2f(nullptr, 0); }
+		vecV2f phis2D::collider::CircleCollider::GetTransformedVertices() { return vecV2f(nullptr, 0); }
 		v2fRect CircleCollider::GetRectCollider() { return v2fRect(CenterPosition - v2f(Radius, Radius), v2f(2.f * Radius, 2.f * Radius)); }
 
 
@@ -31,26 +31,26 @@ namespace phis2D
 
 			if (r > phis2D::worldPhysicConstant::maxRadius)
 			{
-				outMessage = "[CreateCircleCollider](--errore 'Big Value')\n {\n\tcircle with radius:" + std::to_string(r) + " maximum radius: " +
-														std::to_string((int)phis2D::worldPhysicConstant::maxRadius) + "}.\n }\n";
+				outMessage = "[CreateCircleCollider](--errore 'Big Value'){ Ñircle with radius:" + std::to_string(r) + " maximum radius: " +
+														std::to_string((int)phis2D::worldPhysicConstant::maxRadius) + "}. }\n";
 				return false;
 			}
 			if (r < phis2D::worldPhysicConstant::minRadius)
 			{
-				outMessage = "[CreateCircleCollider](--errore 'Small Value')\n {\n\tcircle with radius:" + std::to_string(r) + " minimum radius: " +
-					std::to_string((int)phis2D::worldPhysicConstant::maxRadius) + "}.\n }\n";
+				outMessage = "[CreateCircleCollider](--errore 'Small Value'){ Ñircle with radius:" + std::to_string(r) + " minimum radius: " +
+					std::to_string((int)phis2D::worldPhysicConstant::maxRadius) + "}. }\n";
 				return false;
 			}
 			if (area > phis2D::worldPhysicConstant::maxArea)
 			{
-				outMessage = "[CreateCircleCollider](--errore 'Big Value')\n {\n\tcircle with Area: " + std::to_string((int)area) + " maximum Area: " +
-					std::to_string((int)phis2D::worldPhysicConstant::maxArea) + "}.\n }\n";
+				outMessage = "[CreateCircleCollider](--errore 'Big Value'){ Ñircle with Area: " + std::to_string((int)area) + " maximum Area: " +
+					std::to_string((int)phis2D::worldPhysicConstant::maxArea) + "}. }\n";
 				return false;
 			}
 			if (area < phis2D::worldPhysicConstant::minArea)
 			{
-				outMessage = "[CreateCircleCollider](--errore 'Small Value')\n {\n\tcircle with Area: " + std::to_string((int)area) + " minimum Area: " +
-					std::to_string((int)phis2D::worldPhysicConstant::minArea) + "}.\n }\n";
+				outMessage = "[CreateCircleCollider](--errore 'Small Value'){ Ñircle with Area: " + std::to_string((int)area) + " minimum Area: " +
+					std::to_string((int)phis2D::worldPhysicConstant::minArea) + "}. }\n";
 				return false;
 			}
 
@@ -62,8 +62,8 @@ namespace phis2D
 				return false;
 			}
 
-			outMessage = "[CreateCircleCollider](created)\n {\n\tCircle with CenterPosition: {" + std::to_string((int)posCenter.x) + ", " + std::to_string((int)posCenter.y) +
-				"} and radius: " + std::to_string(r) + "}.\n }\n";
+			outMessage = "[CreateCircleCollider](created){ Circle with CenterPosition: {" + std::to_string((int)posCenter.x) + ", " + std::to_string((int)posCenter.y) +
+				"} and radius: " + std::to_string(r) + "}. }\n";
 			return true;
 		}
 

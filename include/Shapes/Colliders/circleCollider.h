@@ -19,7 +19,7 @@ namespace phis2D
 			//--------------------------РВМ часть--------------------------
 			//================Реализация Виртуальных Методов===============
 
-			const vecV2f& GetTransformedVertices() override;
+			vecV2f GetTransformedVertices() override;
 			phis2D::collider::typeCollider GetTypeCollider() override;
 			v2fRect GetRectCollider() override;
 

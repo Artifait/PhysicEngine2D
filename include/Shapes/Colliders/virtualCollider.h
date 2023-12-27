@@ -61,7 +61,7 @@ namespace phis2D
 			//--------------Обьявление основных методов для работы с коллайдерами--------------
 
 			//Для работы с !кругами а вообще отдает коорды всеx вершины, у кругов нужно переопределить 
-			virtual const vecV2f& GetTransformedVertices() 
+			virtual vecV2f GetTransformedVertices() 
 			{
 				if (transformUpdateRequired)
 				{
@@ -78,7 +78,7 @@ namespace phis2D
 			
 
 			//Каждые три индекса описывают треугольник, в итоги получаем триугольники для рисования всей фигуры
-			virtual const vecIndex& GetTriangles() { return vecIndex(triangleIndex, countTriangleIndex); };
+			virtual vecIndex GetTriangles() { return vecIndex(triangleIndex, countTriangleIndex); };
 
 			//Квадрат описанный около фигиру его стороны паралельны абцисе и ординате, у кругов нужно переопределить 
 			virtual v2fRect GetRectCollider() {

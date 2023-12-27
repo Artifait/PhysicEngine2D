@@ -61,27 +61,27 @@ namespace phis2D
 
 			if (size.x > phis2D::worldPhysicConstant::maxSide || size.y > phis2D::worldPhysicConstant::maxSide)
 			{
-				outMessage = "[CreateBoxCollider](--errore 'Big Value')\n {\n\tbox with sides : {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
-					"} maximum side: " + std::to_string((int)phis2D::worldPhysicConstant::maxSide) + ".\n}\n";
+				outMessage = "[CreateBoxCollider](--errore 'Big Value'){ Box with sides : {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
+					"} maximum side: " + std::to_string((int)phis2D::worldPhysicConstant::maxSide) + ". }\n";
 				return false;
 			}
 			if (size.x < phis2D::worldPhysicConstant::minSide || size.y < phis2D::worldPhysicConstant::minSide)
 			{
-				outMessage = "[CreateBoxCollider](--errore 'Small Value')\n {\n\tbox with sides: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
-					"} minimum side: " + std::to_string((int)phis2D::worldPhysicConstant::minSide) + ".\n}\n";
+				outMessage = "[CreateBoxCollider](--errore 'Small Value'){ Box with sides: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
+					"} minimum side: " + std::to_string((int)phis2D::worldPhysicConstant::minSide) + ". }\n";
 				return false;
 			}
 
 			if (area > phis2D::worldPhysicConstant::maxArea)
 			{
-				outMessage = "[CreateBoxCollider](--errore 'Big Value')\n {\n\tbox with Area: " + std::to_string(area) + " maximum Area: " +
-					std::to_string((int)phis2D::worldPhysicConstant::maxArea) + ".\n}\n";
+				outMessage = "[CreateBoxCollider](--errore 'Big Value'){ Box with Area: " + std::to_string(area) + " maximum Area: " +
+					std::to_string((int)phis2D::worldPhysicConstant::maxArea) + ". }\n";
 				return false;
 			}
 			if (area < phis2D::worldPhysicConstant::minArea)
 			{
-				outMessage = "[CreateBoxCollider](--errore 'Small Value')\n {\n\tbox with Area: " + std::to_string(area) + " minimum Area: " +
-					std::to_string((int)phis2D::worldPhysicConstant::minArea) + ".\n}\n";
+				outMessage = "[CreateBoxCollider](--errore 'Small Value'){ Box with Area: " + std::to_string(area) + " minimum Area: " +
+					std::to_string((int)phis2D::worldPhysicConstant::minArea) + ". }\n";
 				return false;
 			}
 
@@ -91,8 +91,8 @@ namespace phis2D
 				outMessage = "[CreateBoxCollider](--errore 'Memory'){ Memory allocation failed. }\n";
 				return false;
 			}
-			outMessage = "[CreateBoxCollider](created)\n {\n\tBox with size: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
-				"} and pos: {" + std::to_string((int)pos.x) + ", " + std::to_string((int)pos.y) + "}.\n }\n";
+			outMessage = "[CreateBoxCollider](created){Box with size: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
+				"} and pos: {" + std::to_string((int)pos.x) + ", " + std::to_string((int)pos.y) + "}. }\n";
 			return true;
 		}
 

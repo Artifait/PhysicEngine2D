@@ -17,7 +17,7 @@ namespace phis2D
 
 
 			phis2D::collider::typeCollider GetTypeCollider() override;
-			const vecV2f& GetTransformedVertices()
+			vecV2f GetTransformedVertices()
 			{
 				if (transformUpdateRequired)
 				{

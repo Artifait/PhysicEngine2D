@@ -9,5 +9,6 @@ namespace phis2D
 			Circle = 1,
 			Polygon = 2
 		};
+		const size_t countCollidersTypes = 3;
 	}
 }

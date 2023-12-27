@@ -28,6 +28,7 @@ public:
     v2f operator*(const v2f& other) const {
         return v2f(x * other.x, y * other.y);
     }
+
     v2f operator/(float scalar) const {
         return v2f(x / scalar, y / scalar);
     }
@@ -134,6 +135,7 @@ public:
     static v2f v2fMin() { return v2f(-3.4E+38f, -3.4E+38f); }
 
 
+
     static float dot(const v2f& v1, const v2f& v2) {
         return v1.x * v2.x + v1.y * v2.y;
     }
@@ -178,5 +180,11 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const v2f& vec) {
         os << "v2f(" << vec.x << ", " << vec.y << ")";
         return os;
+    }
+    friend v2f operator*(float scalar, const v2f& vec) {
+        v2f result;
+        result.x = scalar * vec.x;
+        result.y = scalar * vec.y;
+        return result;
     }
 };

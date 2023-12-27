@@ -59,7 +59,7 @@ namespace phis2D
 				outMessage = "[CreatePolygonCollider](--errore 'Memory'){ Memory allocation failed. }\n";
 				return false;
 			}
-			outMessage = "[CreatePolygonCollider](created){ Bse Norm}.\n }\n";
+			outMessage = "[CreatePolygonCollider](created){ Bse Norm. }\n";
 			return true;
 		}
 
