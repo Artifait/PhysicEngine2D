@@ -1,13 +1,15 @@
 #pragma once
 #include <Utility/utilityDraw/utilityDrawPrimetive.h>
-#include <Shapes/Colliders.h>
+#include <Shapes/baseBady.h>
 
 namespace utility
 {
 	namespace draw
 	{
-		void DrawCollider(sf::RenderWindow& win, phis2D::collider::VirtualCollider* collider, 
-			bool filled = true, bool boundary = false, const sf::Color& col = sf::Color(34, 109, 224));
+		void DrawCollider(sf::RenderWindow& win, phis2D::collider::VirtualCollider* collider,
+			bool filled, bool boundary, const sf::Color& col);
+		void DrawBady(sf::RenderWindow& win, phis2D::BaseBady2D* bady, bool filled, bool boundary, 
+			bool possibilityBoundary, const sf::Color& col);
 	}
 
 }

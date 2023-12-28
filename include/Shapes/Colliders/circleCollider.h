@@ -14,7 +14,26 @@ namespace phis2D
 			~CircleCollider() = default;
 			const float& GetRadius();
 			//========================
-			
+
+			CircleCollider(const CircleCollider& other)
+				: VirtualCollider(other), Radius{other.Radius} {}
+			CircleCollider(CircleCollider&& other) noexcept
+				: VirtualCollider(std::move(other)), Radius{ other.Radius } {}
+
+			CircleCollider& operator=(const CircleCollider& other)
+			{
+				if (this != &other)
+					VirtualCollider::operator=(other);
+				return *this;
+			}
+
+			CircleCollider& operator=(CircleCollider&& other) noexcept
+			{
+				if (this != &other)
+					VirtualCollider::operator=(std::move(other));
+				return *this;
+			}
+
 
 			//--------------------------РВМ часть--------------------------
 			//================Реализация Виртуальных Методов===============
@@ -29,7 +48,6 @@ namespace phis2D
 			//=================out_Fabric=================
 			friend bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider);
 			//=================out_Fabric=================
-
 		private:
 			void SetTriangles() override {};
 			void SetVertices() override {};

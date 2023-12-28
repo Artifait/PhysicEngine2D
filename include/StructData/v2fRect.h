@@ -14,7 +14,7 @@ public:
 	const v2f& GetPosition() const { return Position; }
 
 	const v2f& GetMinCorner() const { return GetPosition(); }
-	const v2f& GetMaxCorner() const { return GetPosition() + GetSize(); }
+	v2f GetMaxCorner() const { return GetPosition() + GetSize(); }
 	void Move(const v2f& offset) { Position += offset; }
 	void MoveTo(const v2f& newPosition) { Position = newPosition; }
 

@@ -4,7 +4,7 @@ namespace utility
 {
 	namespace draw
 	{
-		void DrawCollider(sf::RenderWindow& win, phis2D::collider::VirtualCollider* collider, bool filled, bool boundary , const sf::Color& col)
+		void DrawCollider(sf::RenderWindow& win, phis2D::collider::VirtualCollider* collider, bool filled, bool boundary, const sf::Color& col)
 		{
 			if (collider == nullptr)
 			{
@@ -26,7 +26,12 @@ namespace utility
 				DrawVector(win, v2f(cos(collider->GetRotation()) * radius, sin(collider->GetRotation()) * radius), collider->GetPosition());
 			}
 
-			boundary ? DrawBoxLine(win, collider->GetRectCollider(), sf::Color::White) : void();
+			boundary ? DrawBoxLine(win, collider->GetRectCollider(), sf::Color::Red) : void();
+		}
+		void utility::draw::DrawBady(sf::RenderWindow& win, phis2D::BaseBady2D* bady, bool filled, bool boundary, bool possibilityBoundary, const sf::Color& col)
+		{
+			DrawCollider(win, bady->ICollider, filled, boundary, col);
+			possibilityBoundary ? DrawBoxLine(win, bady->GetRectPossibilityCollision(), sf::Color::White) : void();
 		}
 	}
 

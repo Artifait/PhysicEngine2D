@@ -7,6 +7,7 @@
 
 namespace phis2D
 {
+	class World2D;
 	namespace collider
 	{
 		//ps: const int *pa - это Указатели на константы	// нельзя менять переменную
@@ -33,6 +34,113 @@ namespace phis2D
 			~VirtualCollider() { delete[] transformedVertices; delete[] vertices; delete[] triangleIndex; };
 			//========================
 
+			//==NO=====base=======NO==
+			
+			VirtualCollider(const VirtualCollider& other)
+				: rotation(other.rotation),
+				CenterPosition(other.CenterPosition),
+				transformUpdateRequired(other.transformUpdateRequired),
+				countVertices(other.countVertices),
+				countTriangleIndex(other.countTriangleIndex) {
+				// Выделение памяти и копирование значений transformedVertices
+				transformedVertices = new v2f[countVertices];
+				for (size_t i = 0; i < countVertices; ++i) {
+					transformedVertices[i] = other.transformedVertices[i];
+				}
+
+				// Выделение памяти и копирование значений triangleIndex
+				triangleIndex = new size_t[countTriangleIndex];
+				for (size_t i = 0; i < countTriangleIndex; ++i) {
+					triangleIndex[i] = other.triangleIndex[i];
+				}
+
+				// Выделение памяти и копирование значений vertices
+				vertices = new v2f[countVertices];
+				for (size_t i = 0; i < countVertices; ++i) {
+					vertices[i] = other.vertices[i];
+				}
+			}
+
+			VirtualCollider(VirtualCollider&& other) noexcept
+				: rotation(other.rotation),
+				CenterPosition(std::move(other.CenterPosition)),
+				transformUpdateRequired(other.transformUpdateRequired),
+				countVertices(other.countVertices),
+				countTriangleIndex(other.countTriangleIndex) {
+				transformedVertices = other.transformedVertices;
+				other.transformedVertices = nullptr;
+
+				triangleIndex = other.triangleIndex;
+				other.triangleIndex = nullptr;
+
+				vertices = other.vertices;
+				other.vertices = nullptr;
+			}
+
+			// Оператор присваивания копированием
+			VirtualCollider& operator=(const VirtualCollider& other)
+			{
+				if (this != &other)
+				{
+					rotation = other.rotation;
+					CenterPosition = other.CenterPosition;
+					transformUpdateRequired = other.transformUpdateRequired;
+					countVertices = other.countVertices;
+					countTriangleIndex = other.countTriangleIndex;
+
+					// Освобождение старой памяти
+					delete[] transformedVertices;
+					delete[] triangleIndex;
+					delete[] vertices;
+
+					// Выделение новой памяти и копирование значений
+					transformedVertices = new v2f[countVertices];
+					for (size_t i = 0; i < countVertices; ++i) {
+						transformedVertices[i] = other.transformedVertices[i];
+					}
+
+					triangleIndex = new size_t[countTriangleIndex];
+					for (size_t i = 0; i < countTriangleIndex; ++i) {
+						triangleIndex[i] = other.triangleIndex[i];
+					}
+
+					vertices = new v2f[countVertices];
+					for (size_t i = 0; i < countVertices; ++i) {
+						vertices[i] = other.vertices[i];
+					}
+				}
+				return *this;
+			}
+
+			// Оператор присваивания перемещением
+			VirtualCollider& operator=(VirtualCollider&& other) noexcept
+			{
+				if (this != &other)
+				{
+					rotation = other.rotation;
+					CenterPosition = std::move(other.CenterPosition);
+					transformUpdateRequired = other.transformUpdateRequired;
+					countVertices = other.countVertices;
+					countTriangleIndex = other.countTriangleIndex;
+
+					// Освобождение старой памяти
+					delete[] transformedVertices;
+					delete[] triangleIndex;
+					delete[] vertices;
+
+					// Перемещение указателей на новую память
+					transformedVertices = other.transformedVertices;
+					other.transformedVertices = nullptr;
+
+					triangleIndex = other.triangleIndex;
+					other.triangleIndex = nullptr;
+
+					vertices = other.vertices;
+					other.vertices = nullptr;
+				}
+				return *this;
+			}
+			//==NO=====base=======NO==
 
 			//==========Движение==========
 			virtual void Move(const v2f& offset)
@@ -108,12 +216,11 @@ namespace phis2D
 			virtual const v2f& GetCenterPosition() { return CenterPosition; };
 			virtual v2f GetPosition() { return CenterPosition; };
 			virtual phis2D::collider::typeCollider GetTypeCollider() = 0;
-
 			//---------------------------------------------------------------------------------
 		protected:
 			virtual void SetTriangles() = 0;
 			virtual void SetVertices() = 0;
-
+			friend class World2D;
 			virtual void CreateVertices(size_t countVrt = 0) 
 			{
 				if (transformedVertices != nullptr) delete[] transformedVertices;

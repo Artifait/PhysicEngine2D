@@ -53,7 +53,12 @@ namespace phis2D
 			transformUpdateRequired = true;
 		}
 
-
+		bool phis2D::collider::BoxCollider::CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, VirtualCollider*& outBoxCollider)
+		{
+			outBoxCollider = new(std::nothrow) phis2D::collider::BoxCollider(pos, size);
+			if (outBoxCollider != nullptr) return true;
+			return false;
+		}
 		bool CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, VirtualCollider*& outBoxCollider)
 		{
 			outBoxCollider = nullptr;

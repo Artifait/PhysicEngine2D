@@ -126,7 +126,7 @@ namespace phis2D
 	{
 		auto vertixA = colliderA->GetTransformedVertices();
 		auto vertixB = colliderB->GetTransformedVertices();
-		depth = 3.4E+38;
+		depth = 3.4E+38f;
 		for (int i = 0; i < vertixA.second; i++)
 		{
 			v2f edge = vertixA.first[(i + 1) % vertixA.second] - vertixA.first[i];//грань
@@ -211,11 +211,14 @@ namespace phis2D
 	void phis2D::Collision::ResolverCollision(BaseBady2D* badyA, BaseBady2D* badyB, const v2f& normal, float depth)
 	{
 		v2f relativeVelocity = badyB->LinearVelocity - badyA->LinearVelocity;
+		if (v2f::dot(relativeVelocity, normal) > 0.f) return;
 		float e = std::min(badyA->Restitution, badyB->Restitution);
 		float j = -(1.f + e) * v2f::dot(relativeVelocity, normal);
-		j /= (1.f / badyA->Mass + 1.f / badyB->Mass);
-		badyA->LinearVelocity -= j / badyA->Mass * normal;
-		badyB->LinearVelocity += j / badyA->Mass * normal;
+		j /= badyA->InvMass + badyB->InvMass;
+
+		v2f impulse = j * normal;
+		badyA->LinearVelocity -= impulse * badyA->InvMass;
+		badyB->LinearVelocity += impulse * badyB->InvMass;
 
 	}
 }

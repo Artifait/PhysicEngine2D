@@ -18,21 +18,26 @@ namespace phis2D
 			id = freeId[0];
 			freeId.erase(freeId.begin());
 		}
+		isStatic ?  InvMass = 0.f : InvMass = 1.f / Mass;
 	}
 
 	BaseBady2D::~BaseBady2D() { delete ICollider; freeId.push_back(id); }
 	void phis2D::BaseBady2D::ApplyForce(const v2f& amount) { force = amount; }
-	void phis2D::BaseBady2D::Step(float DT)
+	void phis2D::BaseBady2D::Step(float DT, const v2f& gravity)
 	{
-		LinearVelocity += force * DT;
+		//v2f acceleration = force / Mass;
+		//LinearVelocity += acceleration * DT;
+		LinearVelocity += gravity * DT;
 		ICollider->Move(LinearVelocity * DT);
 		ICollider->Rotate(RotationVelocity * DT);
 		force = v2f();
+		spaceUpdateRequired = true;
+		GetRectPossibilityCollision(DT);
 	}
 
-	void phis2D::BaseBady2D::Move(const v2f& offset) { ICollider->Move(offset); }
-	void phis2D::BaseBady2D::MoveTo(const v2f& position) { ICollider->MoveTo(position); }
-	void phis2D::BaseBady2D::Rotate(float amount) { ICollider->Rotate(amount); }
+	void phis2D::BaseBady2D::Move(const v2f& offset) { ICollider->Move(offset); spaceUpdateRequired = true; }
+	void phis2D::BaseBady2D::MoveTo(const v2f& position) { ICollider->MoveTo(position); spaceUpdateRequired = true; }
+	void phis2D::BaseBady2D::Rotate(float amount) { ICollider->Rotate(amount); spaceUpdateRequired = true; }
 
 	//Getters
 	const v2f& phis2D::BaseBady2D::GetLinearVelocity() const { return LinearVelocity; }
@@ -47,19 +52,19 @@ namespace phis2D
 	{
 		if (collider == nullptr)
 		{
-			outMessage = "[CreateColliderBady](--error 'Memory')\n {\n\tnullptr collider}\n";
+			outMessage = "[CreateColliderBady](--error 'Memory'){ nullptr collider }\n";
 			return false;
 		}
 		if (density > worldPhysicConstant::MaxDensity)
 		{
-			outMessage = "[CreateColliderBady](--error 'Big Value')\n {\n\tMax density: " + std::to_string(worldPhysicConstant::MaxDensity) + 
-				", you density: " + std::to_string(density) + ".\n}\n";
+			outMessage = "[CreateColliderBady](--error 'Big Value'){ Max density: " + std::to_string(worldPhysicConstant::MaxDensity) + 
+				", you density: " + std::to_string(density) + ". }\n";
 			return false;
 		}
 		if (density < worldPhysicConstant::MinDensity)
 		{
-			outMessage = "[CreateColliderBady](error 'Small Value')\n {\n\tMin density: " + std::to_string(worldPhysicConstant::MinDensity) +
-				", you density: " + std::to_string(density) + ".\n}\n";
+			outMessage = "[CreateColliderBady](error 'Small Value'){ Min density: " + std::to_string(worldPhysicConstant::MinDensity) +
+				", you density: " + std::to_string(density) + ". }\n";
 			return false;
 		}
 
@@ -83,14 +88,14 @@ namespace phis2D
 	{
 		if (density > worldPhysicConstant::MaxDensity)
 		{
-			outMessage = "[CreateColliderBady](--error 'Big Value')\n {\n\tMax density: " + std::to_string(worldPhysicConstant::MaxDensity) +
-				", you density: " + std::to_string(density) + ".\n}\n";
+			outMessage = "[CreateColliderBady](--error 'Big Value'){ Max density: " + std::to_string(worldPhysicConstant::MaxDensity) +
+				", you density: " + std::to_string(density) + ". }\n";
 			return false;
 		}
 		if (density < worldPhysicConstant::MinDensity)
 		{
-			outMessage = "[CreateColliderBady](error 'Small Value')\n {\n\tMin density: " + std::to_string(worldPhysicConstant::MinDensity) +
-				", you density: " + std::to_string(density) + ".\n}\n";
+			outMessage = "[CreateColliderBady](error 'Small Value'){ Min density: " + std::to_string(worldPhysicConstant::MinDensity) +
+				", you density: " + std::to_string(density) + ". }\n";
 			return false;
 		}
 
@@ -109,16 +114,17 @@ namespace phis2D
 	{
 		if (density > worldPhysicConstant::MaxDensity)
 		{
-			outMessage = "[CreateColliderBady](--error 'Big Value')\n {\n\tMax density: " + std::to_string(worldPhysicConstant::MaxDensity) +
-				", you density: " + std::to_string(density) + ".\n}\n";
+			outMessage = "[CreateColliderBady](--error 'Big Value'){ Max density: " + std::to_string(worldPhysicConstant::MaxDensity) +
+				", you density: " + std::to_string(density) + ". }\n";
 			return false;
 		}
 		if (density < worldPhysicConstant::MinDensity)
 		{
-			outMessage = "[CreateColliderBady](error 'Small Value')\n {\n\tMin density: " + std::to_string(worldPhysicConstant::MinDensity) +
-				", you density: " + std::to_string(density) + ".\n}\n";
+			outMessage = "[CreateColliderBady](error 'Small Value'){ Min density: " + std::to_string(worldPhysicConstant::MinDensity) +
+				", you density: " + std::to_string(density) + ". }\n";
 			return false;
 		}
+
 
 		collider::VirtualCollider* boxCollider;
 		std::string outMsg;

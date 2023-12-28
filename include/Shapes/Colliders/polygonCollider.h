@@ -14,7 +14,24 @@ namespace phis2D
 			//==========base==========
 			~PolygonCollider() = default;
 			//========================
+			PolygonCollider(const PolygonCollider& other)
+				: VirtualCollider(other) {}
+			PolygonCollider(PolygonCollider&& other) noexcept
+				: VirtualCollider(std::move(other)) {}
 
+			PolygonCollider& operator=(const PolygonCollider& other)
+			{
+				if (this != &other)
+					VirtualCollider::operator=(other);
+				return *this;
+			}
+
+			PolygonCollider& operator=(PolygonCollider&& other) noexcept
+			{
+				if (this != &other)
+					VirtualCollider::operator=(std::move(other));
+				return *this;
+			}
 
 			phis2D::collider::typeCollider GetTypeCollider() override;
 			vecV2f GetTransformedVertices()
