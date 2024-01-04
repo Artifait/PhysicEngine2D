@@ -11,13 +11,12 @@ int main()
     float fps = 0;
     while (window.isOpen())
     {
-        DT = clock.getElapsedTime().asSeconds();
+        DT = clock.restart().asSeconds();
         fps = 1.f / DT;
         window.setTitle(to_string(fps));
-        clock.restart();
         sf::Event event;
         while (window.pollEvent(event))
-        {
+        { 
             if (event.type == sf::Event::Closed)
                 window.close();
         }

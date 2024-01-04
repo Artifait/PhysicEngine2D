@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 
+
 class v2f {
 public:
     // Конструкторы

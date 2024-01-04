@@ -2,7 +2,6 @@
 
 #include <StructData/v2f.h>
 
-
 class v2fRect
 {
 public:

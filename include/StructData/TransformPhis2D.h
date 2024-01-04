@@ -8,7 +8,7 @@ namespace phis2D
 		v2f Position;
 		float Cos;
 		float Sin;
-		Transform2D(v2f position, float angl) : Position{position}
+		Transform2D(v2f position, float angl) : Position{ position }
 		{
 			Cos = cos(angl);
 			Sin = sin(angl);
@@ -21,9 +21,9 @@ namespace phis2D
 		static v2f Transform(const v2f& v, const Transform2D& transform)
 		{
 			return v2f(
-					transform.Cos * v.x - transform.Sin * v.y + transform.Position.x,
-					transform.Sin * v.x + transform.Cos * v.y + transform.Position.y
-					);
+				transform.Cos * v.x - transform.Sin * v.y + transform.Position.x,
+				transform.Sin * v.x + transform.Cos * v.y + transform.Position.y
+			);
 		}
 	};
 }
