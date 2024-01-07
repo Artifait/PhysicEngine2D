@@ -2,6 +2,17 @@
 
 namespace phis2D
 {
+<<<<<<< HEAD
+namespace collider
+{
+	enum typeCollider {
+		Box = 0,
+		Circle,
+		Polygon,
+		typeColliderCount
+	};
+}
+=======
 	namespace collider
 	{
 		enum typeCollider {
@@ -11,4 +22,5 @@ namespace phis2D
 		};
 		const size_t countCollidersTypes = 3;
 	}
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 }

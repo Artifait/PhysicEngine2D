@@ -3,16 +3,36 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
+<<<<<<< HEAD
+class App;
+namespace phis2D
+{
+	class BaseBady2D;
+	class Scena;
+}
+
+=======
 namespace phis2D
 {
 	// Физическое тело
 	class BaseBady2D;
 }
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 namespace utility
 {
 	namespace draw
 	{
 		void DrawCollider(sf::RenderWindow& win, phis2D::collider::VirtualCollider* collider,
+<<<<<<< HEAD
+			bool filled, bool boundary, const sf::Color& collOutline, const sf::Color& collFill, float pxLine);
+		void DrawBady(sf::RenderWindow& win, phis2D::BaseBady2D* bady, bool filled, bool boundary,
+			bool possibilityBoundary, const sf::Color& collOutline, const sf::Color& collFill, float pxLine);
+	}
+
+}
+
+
+=======
 			bool filled = true, bool boundary = false, const sf::Color& col = sf::Color(34, 109, 224));
 		void DrawBady(sf::RenderWindow& win, phis2D::BaseBady2D* bady, bool filled = true, bool boundary = false,
 			bool possibilityBoundary = false, const sf::Color& col = sf::Color(34, 109, 224));
@@ -21,6 +41,7 @@ namespace utility
 
 
 
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 namespace phis2D
 {
 	// Физическое тело
@@ -28,6 +49,25 @@ namespace phis2D
 	{
 	public:
 		static bool CreateColliderBady(collider::VirtualCollider* collider, bool isStatic,
+<<<<<<< HEAD
+			float density, float restition, BaseBady2D*& outBady, std::string& outMessage);
+
+		static bool CreateCircleBady(const v2f& posCenter, float r, bool isStatic,
+			float density, float restition, BaseBady2D*& outBady, std::string& outMessage);
+
+		static bool CreateBoxBady(const v2f& position, const v2f& size, bool isStatic,
+			float density, float restition, BaseBady2D*& outBady, std::string& outMessage);
+
+		static bool CreatePolygonBady(const v2f& posCenter, const v2f* vertices, size_t cntVertices, bool isStatic,
+			float density, float restition, BaseBady2D*& outBady, std::string& outMessage);
+		BaseBady2D(const BaseBady2D& other);
+		BaseBady2D(BaseBady2D* other); 
+		BaseBady2D(BaseBady2D&& other) noexcept;
+
+		BaseBady2D& operator=(const BaseBady2D& other);
+		BaseBady2D& operator=(BaseBady2D&& other) noexcept;
+
+=======
 			float density, float mass, float restition, BaseBady2D*& outBady, std::string& outMessage);
 
 		static bool CreateCircleBady(const v2f& posCenter, float r, bool isStatic,
@@ -132,6 +172,7 @@ namespace phis2D
 
 			return *this;
 		}
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 		void Move(const v2f& offset);
 		void MoveTo(const v2f& position);
 		void Rotate(float amount);
@@ -142,17 +183,43 @@ namespace phis2D
 		const float& GetMass() const;
 		const float& GetDensity() const;
 		const float& GetRestitution() const;
+<<<<<<< HEAD
+		const v2f& GetPosition() const;
+		const bool& IsStatic() const;
+
+=======
 		const bool& IsStatic() const;
 
 		friend class World2D;
 		friend class Collision;
 
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 		~BaseBady2D();
 
 
 		//for Collision
 		v2f GetMinCorner() const { return spaceCollisionTesting.GetMinCorner(); }
 		v2f GetMaxCorner() const { return spaceCollisionTesting.GetMaxCorner(); }
+<<<<<<< HEAD
+		v2fRect GetRectPossibilityCollision();
+
+	private:
+		friend class World2D;
+		friend class Collision;
+		friend class App;
+		friend class Scena;
+		friend class AdderBody;
+		friend 	void utility::draw::DrawBady(sf::RenderWindow& win, phis2D::BaseBady2D* bady, bool filled, bool boundary,
+			bool possibilityBoundary, const sf::Color& collOutline, const sf::Color& collFill, float pxLine);
+
+		BaseBady2D(collider::VirtualCollider* collider, bool isStatic, float density, float mass, float restition, float area);
+
+		v2fRect GetRectPossibilityCollision(float DT);
+		void Step(float DT, const v2f& gravity);
+
+
+
+=======
 		v2fRect GetRectPossibilityCollision() { 
 			if(spaceUpdateRequired)
 			{
@@ -199,6 +266,7 @@ namespace phis2D
 			return spaceCollisionTesting;
 
 		}
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 
 		collider::VirtualCollider* ICollider;// интерфейс коллайдера
 		v2f LinearVelocity;					// скорость 
@@ -217,5 +285,8 @@ namespace phis2D
 		static std::vector<size_t> freeId;	// массив из удаленных id обьектов, при создании обьекта сначала будут присваиваться от сюда, а потом только CountCreatedObject
 	};
 }
+<<<<<<< HEAD
+=======
 
 BOOST_GEOMETRY_REGISTER_BOX(phis2D::BaseBady2D, v2f, GetMinCorner(), GetMaxCorner())
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2

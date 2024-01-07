@@ -15,6 +15,27 @@ namespace phis2D
 			const float& GetRadius();
 			//========================
 
+<<<<<<< HEAD
+			CircleCollider(const CircleCollider& other);
+			CircleCollider(CircleCollider&& other) noexcept;
+			CircleCollider& operator=(const CircleCollider& other);
+			CircleCollider& operator=(CircleCollider&& other) noexcept;
+
+			phis2D::collider::typeCollider GetTypeCollider() override;
+			vecV2f GetTransformedVertices() override;
+			v2fRect GetRectCollider() override;
+			float GetArea() override;
+			friend bool CreateCircleCollider(const v2f& posCenter, float r, 
+				std::string& outMessage, VirtualCollider*& outCircleCollider);
+		private:
+			friend class AdderBody;
+
+			void SetTriangles() override {};
+			void SetVertices() override {};
+
+			CircleCollider(const v2f& posCenter, float r);
+			float Radius;
+=======
 			CircleCollider(const CircleCollider& other)
 				: VirtualCollider(other), Radius{other.Radius} {}
 			CircleCollider(CircleCollider&& other) noexcept
@@ -59,11 +80,15 @@ namespace phis2D
 			//----BaseEtoZnatNado----
 			float Radius;
 			//-----------------------
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 		};
 
 		//=================out_Fabric=================
 		bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider);
+<<<<<<< HEAD
+=======
 		//=================out_Fabric=================
 
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 	}
 }

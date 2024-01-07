@@ -8,10 +8,18 @@
 namespace phis2D
 {
 	class World2D;
+<<<<<<< HEAD
+	class AdderBody;
+
+=======
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 	namespace collider
 	{
 		//ps: const int *pa - это Указатели на константы	// нельзя менять переменную
 		//			int *const pa - Константный указатель	// нельязя менять адресс 
+<<<<<<< HEAD
+		
+=======
 		//
 		//часто встречаямые конструкции означает стаический массив, size_t отвечает за хранение кол-ва обьектов
 		//std::pair<const size_t* const&, size_t>
@@ -20,6 +28,7 @@ namespace phis2D
 		// что означает это кострукция: const size_t* const&.
 		// то что у нас есть константная ссылка(что избавляет нас от лищнего копирования) на const size_t*, что в свою очередь означает хранение не изменяемых данных
 
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 		//----const Array----
 		typedef std::pair<const size_t* const&, size_t> vecIndex;
 		//----const Array----
@@ -35,6 +44,56 @@ namespace phis2D
 			//=======================
 
 			//==NO=====base======NO==
+<<<<<<< HEAD
+			VirtualCollider(const VirtualCollider& other);
+			VirtualCollider(VirtualCollider* other);
+			VirtualCollider(VirtualCollider&& other) noexcept;
+
+			VirtualCollider& operator=(const VirtualCollider& other);
+			VirtualCollider& operator=(VirtualCollider&& other) noexcept;
+
+			virtual float GetArea() = 0;
+
+			//--------------Обьявление основных методов для работы с коллайдерами--------------
+
+			virtual void Move(const v2f& offset);
+			virtual void MoveTo(const v2f& position);
+			virtual void Rotate(float amount);
+
+			virtual vecV2f GetTransformedVertices();
+			virtual vecIndex GetTriangles(); 
+
+			virtual const v2f& GetCenterPosition();
+			virtual v2fRect GetRectCollider();	
+			const float& GetRotation();
+			virtual v2f GetPosition(); 
+
+			virtual phis2D::collider::typeCollider GetTypeCollider() = 0;
+			//---------------------------------------------------------------------------------
+		protected:
+			//-------заполнение массивов-------
+
+			virtual void SetTriangles() = 0;
+			virtual void SetVertices() = 0;
+			//---выделение памяти под массивы---
+
+			virtual void CreateVertices(size_t countVrt = 0);
+			virtual void CreateTriangles(size_t countInd = 0);
+
+			bool transformUpdateRequired = true;
+			float rotation = 0.f;
+			v2f CenterPosition;
+
+			size_t countTriangleIndex = 0;
+			size_t countVertices = 0;
+
+			v2f* transformedVertices = nullptr;
+			size_t* triangleIndex = nullptr;
+			v2f* vertices = nullptr;
+
+			friend class World2D;
+			friend class AdderBody;
+=======
 			
 			VirtualCollider(const VirtualCollider& other)
 				: rotation(other.rotation),
@@ -277,6 +336,7 @@ namespace phis2D
 			// положение точек коллайдера вокруг центральной точки (0, 0) 
 			v2f* vertices = nullptr;
 
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 		};
 
 	}

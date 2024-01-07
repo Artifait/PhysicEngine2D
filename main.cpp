@@ -1,7 +1,12 @@
-#include <EnginePhis2D/worldPhis2D.h>
+#include <Application.h>
 
 int main()
 {
+<<<<<<< HEAD
+    Application app;
+    app.run();
+
+=======
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
     //window.setFramerateLimit(20);
@@ -27,6 +32,9 @@ int main()
         window.display();
     }
     
+>>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
     return 0;
 }
+
+
 

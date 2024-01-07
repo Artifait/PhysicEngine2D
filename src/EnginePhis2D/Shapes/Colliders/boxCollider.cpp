@@ -7,7 +7,23 @@ namespace phis2D
 	namespace collider
 	{
 
+		phis2D::collider::BoxCollider::BoxCollider(const BoxCollider& other)
+			: VirtualCollider(other) {}
+		phis2D::collider::BoxCollider::BoxCollider(BoxCollider&& other) noexcept
+			: VirtualCollider(std::move(other)) {}
+		BoxCollider& phis2D::collider::BoxCollider::operator=(const BoxCollider& other)
+		{
+			if (this != &other)
+				VirtualCollider::operator=(other);
+			return *this;
+		}
 
+		BoxCollider& phis2D::collider::BoxCollider::operator=(BoxCollider&& other) noexcept
+		{
+			if (this != &other)
+				VirtualCollider::operator=(std::move(other));
+			return *this;
+		}
 		BoxCollider::BoxCollider(const v2f& posCenter, const v2f& size)
 			: Size(size)
 		{
@@ -52,7 +68,10 @@ namespace phis2D
 
 			transformUpdateRequired = true;
 		}
-
+		float phis2D::collider::BoxCollider::GetArea()
+		{
+			return Size.x * Size.y;
+		}
 		bool phis2D::collider::BoxCollider::CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, VirtualCollider*& outBoxCollider)
 		{
 			outBoxCollider = new(std::nothrow) phis2D::collider::BoxCollider(pos, size);
@@ -74,19 +93,6 @@ namespace phis2D
 			{
 				outMessage = "[CreateBoxCollider](--errore 'Small Value'){ Box with sides: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
 					"} minimum side: " + std::to_string((int)phis2D::worldPhysicConstant::minSide) + ". }\n";
-				return false;
-			}
-
-			if (area > phis2D::worldPhysicConstant::maxArea)
-			{
-				outMessage = "[CreateBoxCollider](--errore 'Big Value'){ Box with Area: " + std::to_string(area) + " maximum Area: " +
-					std::to_string((int)phis2D::worldPhysicConstant::maxArea) + ". }\n";
-				return false;
-			}
-			if (area < phis2D::worldPhysicConstant::minArea)
-			{
-				outMessage = "[CreateBoxCollider](--errore 'Small Value'){ Box with Area: " + std::to_string(area) + " minimum Area: " +
-					std::to_string((int)phis2D::worldPhysicConstant::minArea) + ". }\n";
 				return false;
 			}
 
