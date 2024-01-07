@@ -3,7 +3,6 @@
 
 namespace phis2D
 {
-<<<<<<< HEAD
 	BaseBady2D::BaseBady2D(const BaseBady2D& other) :
 		ICollider(other.ICollider), LinearVelocity(other.LinearVelocity), spaceCollisionTesting(other.spaceCollisionTesting),
 		spaceUpdateRequired(other.spaceUpdateRequired), force(other.force), isStatic(other.isStatic),
@@ -119,6 +118,7 @@ namespace phis2D
 		}
 		return spaceCollisionTesting;
 	}
+
 	BaseBady2D& BaseBady2D::operator=(const BaseBady2D& other)
 	{
 		if (this == &other)  // Проверка на самоприсваивание
@@ -140,8 +140,7 @@ namespace phis2D
 
 		return *this;
 	}
-=======
->>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
+
 	BaseBady2D::BaseBady2D(collider::VirtualCollider* collider, bool isStatic, float density, float mass, float restition, float area)
 		: ICollider{ collider }, isStatic{ isStatic },
 		RotationVelocity{ 0.f }, LinearVelocity{ 0.f, 0.f }, Density{ density },
@@ -187,11 +186,7 @@ namespace phis2D
 	const bool& phis2D::BaseBady2D::IsStatic() const { return this->isStatic; }
 
 	bool BaseBady2D::CreateColliderBady(collider::VirtualCollider* collider, bool isStatic,
-<<<<<<< HEAD
 		float density, float restition, BaseBady2D*& outBady, std::string& outMessage)
-=======
-		float density, float mass, float restition, BaseBady2D*& outBady, std::string& outMessage)
->>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 	{
 		if (collider == nullptr)
 		{
@@ -212,16 +207,10 @@ namespace phis2D
 		}
 
 		//Может глючить изза нее нужно для polygonov по другому расчитывать площадь
-<<<<<<< HEAD
 		float area = collider->GetArea();
 		float mass = area * density * 10.f / phis2D::worldPhysicConstant::scale; //10 тк перевод из м^2 в см^2(тоесть умножить на 10000)и гр в кг(тоесть разделить на 1000)
 		//mass = area * density;
-=======
-		float area = collider->GetTypeCollider() == phis2D::collider::Circle ?
-			std::pow(static_cast<phis2D::collider::CircleCollider*>(collider)->GetRadius(), 2.f) * PI
-			: collider->GetRectCollider().GetSize().x * collider->GetRectCollider().GetSize().y;
 
->>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 		outBady = new(std::nothrow) phis2D::BaseBady2D(collider, isStatic, density, mass, restition, area);
 		if (outBady == nullptr)
 		{
@@ -231,7 +220,6 @@ namespace phis2D
 		outMessage = "[CreateColliderBady](created){ Bse Norm. }\n";
 		return true;
 	}
-<<<<<<< HEAD
 	bool phis2D::BaseBady2D::CreatePolygonBady(const v2f& posCenter, const v2f* vertices, size_t cntVertices, bool isStatic, float density, float restition, BaseBady2D*& outBady, std::string& outMessage)
 	{
 		if (density > worldPhysicConstant::MaxDensity)
@@ -267,11 +255,6 @@ namespace phis2D
 	}
 	bool BaseBady2D::CreateCircleBady(const v2f& posCenter, float r, bool isStatic,
 		float density, float restition, BaseBady2D*& outBady, std::string& outMessage)
-=======
-
-	bool BaseBady2D::CreateCircleBady(const v2f& posCenter, float r, bool isStatic,
-		float density, float mass, float restition, BaseBady2D*& outBady, std::string& outMessage)
->>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 	{
 		if (density > worldPhysicConstant::MaxDensity)
 		{
@@ -286,20 +269,14 @@ namespace phis2D
 			return false;
 		}
 
-<<<<<<< HEAD
 		collider::VirtualCollider* circleCollider;
 		std::string outMsg;
 		if (!collider::CreateCircleCollider(posCenter, r, outMsg, circleCollider))
-=======
-		collider::VirtualCollider* boxCollider;
-		std::string outMsg;
-		if (!collider::CreateCircleCollider(posCenter, r, outMsg, boxCollider))
->>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 		{
 			outMessage = "[CreateCircleCollider](error 'CreateCircleCollider'){\n\t" + outMsg + "}\n";
 			return false;
 		}
-<<<<<<< HEAD
+
 		float area = circleCollider->GetArea();
 		float mass = area * density * 10.f / phis2D::worldPhysicConstant::scale; //10 тк перевод из м^2 в см^2(тоесть умножить на 10000)и гр в кг(тоесть разделить на 1000)
 
@@ -311,17 +288,11 @@ namespace phis2D
 		}
 		outMessage = "[CreateColliderBady](created){ Bse Norm. }\n";
 
-=======
->>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 		return true;
 	}
 
 	bool BaseBady2D::CreateBoxBady(const v2f& position, const v2f& size, bool isStatic,
-<<<<<<< HEAD
 		float density, float restition, BaseBady2D*& outBady, std::string& outMessage)
-=======
-		float density, float mass, float restition, BaseBady2D*& outBady, std::string& outMessage)
->>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 	{
 		if (density > worldPhysicConstant::MaxDensity)
 		{
@@ -345,12 +316,8 @@ namespace phis2D
 			return false;
 		}
 
-<<<<<<< HEAD
 		float area = boxCollider->GetArea();
 		float mass = area * density * 10.f / phis2D::worldPhysicConstant::scale; //10 тк перевод из м^2 в см^2(тоесть умножить на 10000)и гр в кг(тоесть разделить на 1000)
-=======
-		float area = size.x * size.y;
->>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
 
 		outBady = new(std::nothrow) phis2D::BaseBady2D(boxCollider, isStatic, density, mass, restition, area);
 		if (outBady == nullptr)

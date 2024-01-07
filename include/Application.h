@@ -1,5 +1,4 @@
 #pragma once
-<<<<<<< HEAD
 #include <EnginePhis2D/scenaPhis2D.h>
 #include <EnginePhis2D/adderObject.h>
 #include <EnginePhis2D/createrObject.h>
@@ -50,5 +49,4 @@ private:
 public:
     static Application* GetInstance();
 };
-=======
->>>>>>> e800194a525aa6fce5d2a2e7157a3c25ecdaa9c2
+
