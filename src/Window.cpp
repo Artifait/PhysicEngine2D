@@ -22,16 +22,16 @@ namespace ps
         ImGui::GetFont()->Scale = 2.0f;
     }
 
-    bool Window::isGuiHovered() const
-    {
-        return ImGui::GetIO().WantCaptureMouse;
-    }
+bool Window::isGuiHovered() const
+{
+    return ImGui::GetIO().WantCaptureMouse;
+}
 
-    void Window::clear()
-    {
-        ImGui::SFML::Update(window_, clock_.restart());
-        window_.clear(sf::Color(10, 37, 82));
-    }
+void Window::clear()
+{
+    ImGui::SFML::Update(window_, clock_.restart());
+    window_.clear(sf::Color(10, 37, 82));
+}
 
 
 void Window::display()

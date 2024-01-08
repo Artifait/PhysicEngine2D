@@ -1,44 +1,36 @@
 #pragma once
 #include <EnginePhis2D/Shapes/Colliders/virtualCollider.h>
 
-namespace phis2D
+namespace phis2D::collider
 {
-	namespace collider
+	//Коллайдер для Круга
+	class CircleCollider : public VirtualCollider
 	{
-		//Коллайдер для Круга
-		class CircleCollider : public VirtualCollider
-		{
-		public: 
+	public:
+#pragma region Defolt
+		~CircleCollider() = default;
+		CircleCollider(const CircleCollider& other);
+		CircleCollider(CircleCollider&& other) noexcept;
+		CircleCollider& operator=(const CircleCollider& other);
+		CircleCollider& operator=(CircleCollider&& other) noexcept;
+#pragma endregion
 
-			//==========base==========
-			~CircleCollider() = default;
-			const float& GetRadius();
-			//========================
+#pragma region Getters
+		typeCollider GetTypeCollider() override;
+		vecV2f GetTransformedVertices() override;
+		v2fRect GetRectCollider() override;
+		float GetArea() override;
+		const float& GetRadius();
+#pragma endregion
 
-			CircleCollider(const CircleCollider& other);
-			CircleCollider(CircleCollider&& other) noexcept;
-			CircleCollider& operator=(const CircleCollider& other);
-			CircleCollider& operator=(CircleCollider&& other) noexcept;
+	private:
+		friend class AdderBody;
 
-			phis2D::collider::typeCollider GetTypeCollider() override;
-			vecV2f GetTransformedVertices() override;
-			v2fRect GetRectCollider() override;
-			float GetArea() override;
-			friend bool CreateCircleCollider(const v2f& posCenter, float r, 
-				std::string& outMessage, VirtualCollider*& outCircleCollider);
-		private:
-			friend class AdderBody;
+		void SetTriangles() override;
+		void SetVertices() override;
 
-			void SetTriangles() override {};
-			void SetVertices() override {};
+		CircleCollider(const v2f& posCenter, float r);
+		float Radius;
+	};
 
-			CircleCollider(const v2f& posCenter, float r);
-			float Radius;
-
-		};
-
-		//=================out_Fabric=================
-		bool CreateCircleCollider(const v2f& posCenter, float r, std::string& outMessage, VirtualCollider*& outCircleCollider);
-
-	}
 }

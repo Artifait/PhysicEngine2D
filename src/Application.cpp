@@ -66,14 +66,14 @@ const char* state_mode(State state)
 
 void Application::drawGUI()
 {
-    //ImGui::Begin("Log");
-    //ImGui::BeginChild("");
-    //for (unsigned int i = logs_.size(); i > 0; --i)
-    //{
-    //    ImGui::Text("Log: %s", logs_[i - 1].c_str());
-    //}
-    //ImGui::EndChild();
-    //ImGui::End();
+    ImGui::Begin("Log");
+    ImGui::BeginChild("");
+    for (unsigned int i = logs_.size(); i > 0; --i)
+    {
+        ImGui::Text("Log: %s", logs_[i - 1].c_str());
+    }
+    ImGui::EndChild();
+    ImGui::End();
     if (app_state_ == Simulating)
     {
 

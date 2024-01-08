@@ -8,30 +8,26 @@ namespace phis2D
 		class PolygonCollider : public VirtualCollider
 		{
 		public:
-
-			//==========base==========
+#pragma region Defolt
 			~PolygonCollider() = default;
-			//========================
-
 			PolygonCollider(const PolygonCollider& other);
 			PolygonCollider(PolygonCollider&& other) noexcept;
 			PolygonCollider& operator=(const PolygonCollider& other);
 			PolygonCollider& operator=(PolygonCollider&& other) noexcept;
+#pragma endregion
 
+#pragma region Getters
 			float GetArea() override;
 			phis2D::collider::typeCollider GetTypeCollider() override;
 			static v2f GetCenter(const vecV2f& virts);
 			vecV2f GetTransformedVertices();
+#pragma endregion
 
-
-			//=================out_Fabric=================
-			friend bool CreatePolygonCollider(const vecV2f& virts, std::string& outMessage, VirtualCollider*& outPolygonCollider);
-			//=================out_Fabric=================
 		private:
 			friend class AdderBody;
 
 			void SetTriangles() override;
-			void SetVertices() override {}
+			void SetVertices() override;
 			void SetVertices(const vecV2f& virts);
 
 			//выделяться будет + 1 тк на последнем индексе храниться центр
@@ -39,8 +35,5 @@ namespace phis2D
 			PolygonCollider(const vecV2f& virts);
 		};
 
-		//=================out_Fabric=================
-		bool CreatePolygonCollider(const vecV2f& virts, std::string& outMessage, VirtualCollider*& outPolygonCollider);
-		//=================out_Fabric=================
 	}
 }

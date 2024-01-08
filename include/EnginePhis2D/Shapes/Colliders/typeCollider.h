@@ -1,8 +1,6 @@
 #pragma once
 
-namespace phis2D
-{
-namespace collider
+namespace phis2D::collider
 {
 	enum typeCollider {
 		Box = 0,
@@ -10,5 +8,4 @@ namespace collider
 		Polygon,
 		typeColliderCount
 	};
-}
 }

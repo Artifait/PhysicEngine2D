@@ -14,10 +14,10 @@ namespace phis2D
 
 	namespace worldPhysicConstant
 	{
-		const float maxRadius = 50.f;		// в метрах
+		const float maxRadius = 500.f;		// в метрах
 		const float minRadius = 10.f;
 
-		const float maxSide = 100.f; 
+		const float maxSide = 1000.f; 
 		const float minSide = 20.f; 
 
 		const float scale = 250.f;			// сколько пикселей в метре

@@ -3,24 +3,21 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-class App;
+#pragma region defined
 namespace phis2D
 {
 	class BaseBady2D;
 	class Scena;
 }
 
-namespace utility
+namespace utility::draw
 {
-	namespace draw
-	{
-		void DrawCollider(sf::RenderWindow& win, phis2D::collider::VirtualCollider* collider,
-			bool filled, bool boundary, const sf::Color& collOutline, const sf::Color& collFill, float pxLine);
-		void DrawBady(sf::RenderWindow& win, phis2D::BaseBady2D* bady, bool filled, bool boundary,
-			bool possibilityBoundary, const sf::Color& collOutline, const sf::Color& collFill, float pxLine);
-	}
-
+	void DrawCollider(sf::RenderWindow& win, phis2D::collider::VirtualCollider* collider,
+		bool filled, bool boundary, const sf::Color& collOutline, const sf::Color& collFill, float pxLine);
+	void DrawBady(sf::RenderWindow& win, phis2D::BaseBady2D* bady, bool filled, bool boundary,
+		bool possibilityBoundary, const sf::Color& collOutline, const sf::Color& collFill, float pxLine);
 }
+#pragma endregion
 
 namespace phis2D
 {
@@ -28,29 +25,24 @@ namespace phis2D
 	class BaseBady2D
 	{
 	public:
-		static bool CreateColliderBady(collider::VirtualCollider* collider, bool isStatic,
-			float density, float restition, BaseBady2D*& outBady, std::string& outMessage);
-
-		static bool CreateCircleBady(const v2f& posCenter, float r, bool isStatic,
-			float density, float restition, BaseBady2D*& outBady, std::string& outMessage);
-
-		static bool CreateBoxBady(const v2f& position, const v2f& size, bool isStatic,
-			float density, float restition, BaseBady2D*& outBady, std::string& outMessage);
-
-		static bool CreatePolygonBady(const v2f& posCenter, const v2f* vertices, size_t cntVertices, bool isStatic,
-			float density, float restition, BaseBady2D*& outBady, std::string& outMessage);
+#pragma region Defolt
 		BaseBady2D(const BaseBady2D& other);
-		BaseBady2D(BaseBady2D* other); 
 		BaseBady2D(BaseBady2D&& other) noexcept;
 
 		BaseBady2D& operator=(const BaseBady2D& other);
 		BaseBady2D& operator=(BaseBady2D&& other) noexcept;
 
+		~BaseBady2D();
+#pragma endregion
+
+#pragma region Manipulation
 		void Move(const v2f& offset);
 		void MoveTo(const v2f& position);
 		void Rotate(float amount);
 		void ApplyForce(const v2f& amount);
+#pragma endregion
 
+#pragma region Getters
 		const v2f& GetLinearVelocity() const;
 		const float& GetArea() const;
 		const float& GetMass() const;
@@ -58,30 +50,26 @@ namespace phis2D
 		const float& GetRestitution() const;
 		const v2f& GetPosition() const;
 		const bool& IsStatic() const;
+#pragma endregion
 
-
-		~BaseBady2D();
-
-
-		//for Collision
-		v2f GetMinCorner() const { return spaceCollisionTesting.GetMinCorner(); }
-		v2f GetMaxCorner() const { return spaceCollisionTesting.GetMaxCorner(); }
+#pragma region Collision
+		v2f GetMinCorner() const; 
+		v2f GetMaxCorner() const;
 		v2fRect GetRectPossibilityCollision();
+#pragma endregion
 
 	private:
-		friend class World2D;
 		friend class Collision;
-		friend class App;
 		friend class Scena;
 		friend class AdderBody;
-		friend 	void utility::draw::DrawBady(sf::RenderWindow& win, phis2D::BaseBady2D* bady, bool filled, bool boundary,
+
+		friend 	void utility::draw::DrawBady(sf::RenderWindow& win, BaseBady2D* bady, bool filled, bool boundary,
 			bool possibilityBoundary, const sf::Color& collOutline, const sf::Color& collFill, float pxLine);
 
 		BaseBady2D(collider::VirtualCollider* collider, bool isStatic, float density, float mass, float restition, float area);
 
 		v2fRect GetRectPossibilityCollision(float DT);
 		void Step(float DT, const v2f& gravity);
-
 
 		collider::VirtualCollider* ICollider;// интерфейс коллайдера
 		v2f LinearVelocity;					// скорость 

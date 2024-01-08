@@ -85,7 +85,7 @@ namespace phis2D
 		bool AddRandomPolygon(const v2f& pos, bool Static)
 		{
 			int n = utility::getRandomNumber(3, 7);
-			auto vertices = utility::ColliderGenerator::GenerateRandVerticesPolygon(pos, n);
+			auto vertices = utility::GenerateRandVerticesPolygon(pos, n);
 
 			float density = utility::getRandomNumber(phis2D::worldPhysicConstant::MinDensity, phis2D::worldPhysicConstant::MaxDensity);
 			float restitution = utility::getRandomNumber(0.f, 1.f);

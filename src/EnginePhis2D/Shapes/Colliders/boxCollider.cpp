@@ -72,40 +72,6 @@ namespace phis2D
 		{
 			return Size.x * Size.y;
 		}
-		bool phis2D::collider::BoxCollider::CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, VirtualCollider*& outBoxCollider)
-		{
-			outBoxCollider = new(std::nothrow) phis2D::collider::BoxCollider(pos, size);
-			if (outBoxCollider != nullptr) return true;
-			return false;
-		}
-		bool CreateBoxCollider(const v2f& pos, const v2f& size, std::string& outMessage, VirtualCollider*& outBoxCollider)
-		{
-			outBoxCollider = nullptr;
-			float area = size.x * size.y;
-
-			if (size.x > phis2D::worldPhysicConstant::maxSide || size.y > phis2D::worldPhysicConstant::maxSide)
-			{
-				outMessage = "[CreateBoxCollider](--errore 'Big Value'){ Box with sides : {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
-					"} maximum side: " + std::to_string((int)phis2D::worldPhysicConstant::maxSide) + ". }\n";
-				return false;
-			}
-			if (size.x < phis2D::worldPhysicConstant::minSide || size.y < phis2D::worldPhysicConstant::minSide)
-			{
-				outMessage = "[CreateBoxCollider](--errore 'Small Value'){ Box with sides: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
-					"} minimum side: " + std::to_string((int)phis2D::worldPhysicConstant::minSide) + ". }\n";
-				return false;
-			}
-
-			outBoxCollider = new(std::nothrow) phis2D::collider::BoxCollider(pos, size);
-			if (outBoxCollider == nullptr)
-			{
-				outMessage = "[CreateBoxCollider](--errore 'Memory'){ Memory allocation failed. }\n";
-				return false;
-			}
-			outMessage = "[CreateBoxCollider](created){Box with size: {" + std::to_string((int)size.x) + ", " + std::to_string((int)size.y) +
-				"} and pos: {" + std::to_string((int)pos.x) + ", " + std::to_string((int)pos.y) + "}. }\n";
-			return true;
-		}
 
 	}
 }
